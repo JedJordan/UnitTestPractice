@@ -94,3 +94,30 @@ TEST(PasswordTest, numbers_ascii_password4)
     int actual = my_password.has_mixed_case("!@#b$%^&*(Z)");
     ASSERT_EQ(1,actual);
 }
+TEST(PasswordTest, default_password)
+{
+    Password my_password;
+    int actual = my_password.authenticate("ChicoCA-95929");
+    ASSERT_EQ(1,actual);
+}
+TEST(PasswordTest, set_and_default_password)
+{
+    Password my_password;
+    my_password.set("ChicoRocks");
+    int actual = my_password.authenticate("ChicoCA-95929");
+    ASSERT_EQ(0,actual);
+}
+TEST(PasswordTest, long_password)
+{
+    Password my_password;
+    my_password.set("    Chico");
+    int actual = my_password.authenticate("    Chico");
+    ASSERT_EQ(0,actual);
+}
+TEST(PasswordTest, non_mixed_password)
+{
+    Password my_password;
+    my_password.set("123AZ321");
+    int actual = my_password.authenticate("123AZ321");
+    ASSERT_EQ(0,actual);
+}
